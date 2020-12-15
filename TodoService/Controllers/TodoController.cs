@@ -21,14 +21,14 @@ namespace TodoService.Controllers
 
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoDTO>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<TodoDTO>>> GetTodos()
         {
             return await _todoService.GetAllAsync();
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoDTO>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoDTO>> GetTodo(long id)
         {
             return await _todoService.GetByIdAsync(id);
         }
@@ -36,7 +36,7 @@ namespace TodoService.Controllers
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, TodoDTO todoDTO)
+        public async Task<IActionResult> PutTodo(long id, TodoDTO todoDTO)
         {
             if (id != todoDTO.Id)
                 return BadRequest();
@@ -68,16 +68,16 @@ namespace TodoService.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoDTO>> PostTodoItem(TodoDTO todoDTO)
+        public async Task<ActionResult<TodoDTO>> PostTodo(TodoDTO todoDTO)
         {
             await _todoService.AddAsync(todoDTO);
 
-            return CreatedAtAction(nameof(GetTodoItem), new { id = todoDTO.Id }, todoDTO);
+            return CreatedAtAction(nameof(GetTodo), new { id = todoDTO.Id }, todoDTO);
         }
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(long id)
+        public async Task<IActionResult> DeleteTodo(long id)
         {
             var found = await _todoService.DeleteAsync(id);
 
