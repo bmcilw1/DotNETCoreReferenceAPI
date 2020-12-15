@@ -86,12 +86,5 @@ namespace TodoService.Controllers
 
             return NoContent();
         }
-
-        private static TodoDTO ItemToDTO(Todo todoItem) => new TodoDTO
-        {
-            Id = todoItem.Id,
-            Name = todoItem.Name,
-            IsComplete = todoItem.IsComplete
-        };
     }
 }
