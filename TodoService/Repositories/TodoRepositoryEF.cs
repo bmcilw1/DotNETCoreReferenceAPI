@@ -20,9 +20,12 @@ namespace TodoService.Repositories
             return _context.Todos.Select(item => ItemToDTO(item)).ToListAsync();
         }
 
-        public async Task<TodoDTO> GetByIdAsync(int id)
+        public async Task<TodoDTO> GetByIdAsync(long id)
         {
             var item = await _context.Todos.FindAsync(id);
+
+            if (item == null)
+                return null;
 
             return ItemToDTO(item);
         }
@@ -51,6 +54,24 @@ namespace TodoService.Repositories
             return _context.SaveChangesAsync();
         }
 
+        public async Task<bool> DeleteAsync(long id)
+        {
+            var todo = await _context.Todos.FindAsync(id);
+            if (todo == null)
+            {
+                return false;
+            }
+
+            _context.Todos.Remove(todo);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public Task<bool> ExistsAsync(long id)
+        {
+            return _context.Todos.AnyAsync(e => e.Id == id);
+        }
 
         private static TodoDTO ItemToDTO(Todo todo) => new TodoDTO
         {
