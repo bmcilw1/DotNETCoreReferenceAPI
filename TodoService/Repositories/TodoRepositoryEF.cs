@@ -41,17 +41,21 @@ namespace TodoService.Repositories
             return _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(TodoDTO todoDTO)
+        public async Task UpdateAsync(TodoDTO todoDTO)
         {
-            var todo = new Todo()
-            {
-                Id = todoDTO.Id,
-                Name = todoDTO.Name,
-                IsComplete = todoDTO.IsComplete
-            };
+            var todo = await _context.Todos.FindAsync(todoDTO.Id);
+
+            if (todo == null)
+                return;
+
+            todo.Id = todoDTO.Id;
+            todo.Name = todoDTO.Name;
+            todo.IsComplete = todoDTO.IsComplete;
 
             _context.Entry(todo).State = EntityState.Modified;
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+
+            return;
         }
 
         public async Task<bool> DeleteAsync(long id)
