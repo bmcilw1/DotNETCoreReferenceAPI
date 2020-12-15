@@ -1,4 +1,4 @@
-# DotNETCoreReferenceAPI
+# TodoService DotNETCoreReferenceAPI
 A simple API on .NET Core
 
 This is an implementation of a .NET Core web api.

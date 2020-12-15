@@ -1,4 +1,4 @@
-using DotNETCoreReferenceAPI.Models;
+using TodoService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace DotNETCoreReferenceAPI
+namespace TodoService
 {
     public class Startup
     {

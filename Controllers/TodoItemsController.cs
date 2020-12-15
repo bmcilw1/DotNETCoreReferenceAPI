@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DotNETCoreReferenceAPI.Models;
+using TodoService.Models;
 
-namespace DotNETCoreReferenceAPI.Controllers
+namespace TodoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

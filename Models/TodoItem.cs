@@ -1,4 +1,4 @@
-namespace DotNETCoreReferenceAPI.Models
+namespace TodoService.Models
 {
     public class TodoItem
     {
