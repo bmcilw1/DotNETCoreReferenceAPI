@@ -22,14 +22,14 @@ namespace TodoAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Todo>>> GetTodos()
         {
-            return await _todoService.GetAllAsync();
+            return Ok(await _todoService.GetAllAsync());
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Todo>> GetTodo(long id)
         {
-            return await _todoService.GetByIdAsync(id);
+            return Ok(await _todoService.GetByIdAsync(id));
         }
 
         // PUT: api/TodoItems/5
@@ -61,7 +61,7 @@ namespace TodoAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/TodoItems
@@ -83,7 +83,7 @@ namespace TodoAPI.Controllers
             if (!found)
                 return NotFound();
 
-            return NoContent();
+            return Ok();
         }
     }
 }
