@@ -1,4 +1,4 @@
-namespace TodoService.Models
+namespace TodoAPI.Models
 {
     public class Todo
     {

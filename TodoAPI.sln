@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoService", "TodoService\TodoService.csproj", "{3AF40D7B-58A0-4B71-ACBA-BA66AC634121}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoAPI", "TodoAPI\TodoAPI.csproj", "{3AF40D7B-58A0-4B71-ACBA-BA66AC634121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoServiceTests", "TodoServiceTests\TodoServiceTests.csproj", "{968FE069-F4FB-4C47-ADD9-24AA9281EF3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoAPITests", "TodoAPITests\TodoAPITests.csproj", "{968FE069-F4FB-4C47-ADD9-24AA9281EF3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TodoService.Models;
-using TodoService.Services;
+using TodoAPI.Models;
+using TodoAPI.Services;
 
-namespace TodoService.Controllers
+namespace TodoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

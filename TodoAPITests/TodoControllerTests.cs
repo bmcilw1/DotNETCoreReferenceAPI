@@ -1,14 +1,14 @@
 using Moq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using TodoService.Controllers;
-using TodoService.Services;
-using TodoService.Models;
+using TodoAPI.Controllers;
+using TodoAPI.Services;
+using TodoAPI.Models;
 using Xunit;
 
-namespace TodoServiceTests
+namespace TodoAPITests
 {
-    public class TodoItemsControllerTests
+    public class TodoControllerTests
     {
         [Fact]
         public async Task GetTodoItems_CallsGetAllAsync()
