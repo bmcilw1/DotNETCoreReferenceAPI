@@ -6,10 +6,10 @@ namespace TodoService.Services
 {
     public interface ITodoService
     {
-        Task<TodoDTO> GetByIdAsync(long id);
-        Task<List<TodoDTO>> GetAllAsync();
-        Task AddAsync(TodoDTO todo);
-        Task UpdateAsync(TodoDTO todo);
+        Task<Todo> GetByIdAsync(long id);
+        Task<List<Todo>> GetAllAsync();
+        Task AddAsync(Todo todo);
+        Task UpdateAsync(Todo todo);
         Task<bool> DeleteAsync(long id);
         Task<bool> ExistsAsync(long id);
     }

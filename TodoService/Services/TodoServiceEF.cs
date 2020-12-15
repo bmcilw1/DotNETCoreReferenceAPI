@@ -15,47 +15,26 @@ namespace TodoService.Services
             _context = context;
         }
 
-        public Task<List<TodoDTO>> GetAllAsync()
+        public Task<List<Todo>> GetAllAsync()
         {
-            return _context.Todos.Select(item => ItemToDTO(item)).ToListAsync();
+            return _context.Todos.ToListAsync();
         }
 
-        public async Task<TodoDTO> GetByIdAsync(long id)
+        public async Task<Todo> GetByIdAsync(long id)
         {
-            var item = await _context.Todos.FindAsync(id);
-
-            if (item == null)
-                return null;
-
-            return ItemToDTO(item);
+            return await _context.Todos.FindAsync(id);
         }
-        public Task AddAsync(TodoDTO todoDTO)
-        {
-            var todo = new Todo()
-            {
-                Name = todoDTO.Name,
-                IsComplete = todoDTO.IsComplete
-            };
 
+        public Task AddAsync(Todo todo)
+        {
             _context.Todos.Add(todo);
             return _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(TodoDTO todoDTO)
+        public Task UpdateAsync(Todo todo)
         {
-            var todo = await _context.Todos.FindAsync(todoDTO.Id);
-
-            if (todo == null)
-                return;
-
-            todo.Id = todoDTO.Id;
-            todo.Name = todoDTO.Name;
-            todo.IsComplete = todoDTO.IsComplete;
-
             _context.Entry(todo).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return;
+            return _context.SaveChangesAsync();
         }
 
         public async Task<bool> DeleteAsync(long id)
@@ -76,12 +55,5 @@ namespace TodoService.Services
         {
             return _context.Todos.AnyAsync(e => e.Id == id);
         }
-
-        private static TodoDTO ItemToDTO(Todo todo) => new TodoDTO
-        {
-            Id = todo.Id,
-            Name = todo.Name,
-            IsComplete = todo.IsComplete
-        };
     }
 }

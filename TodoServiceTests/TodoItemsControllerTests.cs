@@ -18,7 +18,7 @@ namespace TodoServiceTests
             var todoController = new TodoController(todoServiceMock.Object);
 
             todoServiceMock.Setup(s => s.GetAllAsync())
-                .Returns(Task.FromResult(new List<TodoDTO>() {}));
+                .Returns(Task.FromResult(new List<Todo>() { }));
 
             // Act
             await todoController.GetTodos();
