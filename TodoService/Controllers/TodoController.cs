@@ -10,11 +10,11 @@ namespace TodoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodosController : ControllerBase
+    public class TodoController : ControllerBase
     {
         private readonly ITodoService _todoService;
 
-        public TodosController(ITodoService todoRepository)
+        public TodoController(ITodoService todoRepository)
         {
             _todoService = todoRepository;
         }
