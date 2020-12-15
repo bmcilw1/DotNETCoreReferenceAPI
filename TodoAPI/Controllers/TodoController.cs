@@ -29,7 +29,12 @@ namespace TodoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Todo>> GetTodo(long id)
         {
-            return await _todoService.GetByIdAsync(id);
+            var todo = await _todoService.GetByIdAsync(id);
+
+            if (todo == null)
+                return NotFound();
+
+            return todo;
         }
 
         // PUT: api/TodoItems/5
