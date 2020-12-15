@@ -153,6 +153,43 @@ namespace TodoAPITests
             Assert.Equal(1, (result.Result as CreatedAtActionResult).RouteValues["id"]);
         }
 
+        [Fact]
+        public async Task PutTodo_WhenNotFound_Returns404()
+        {
+            // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
+
+            var todo = GetTodo();
+            todoServiceMock
+                .Setup(s => s.UpdateAsync(It.IsAny<Todo>()))
+                .Returns(Task.FromResult(false));
+
+            // Act
+            var result = await todoController.PutTodo(todo.Id, todo);
+
+            // Assert
+            Assert.IsAssignableFrom<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task PutTodo_WhenFound_ReturnsOk()
+        {
+            // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
+
+            var todo = GetTodo();
+            todoServiceMock
+                .Setup(s => s.UpdateAsync(It.IsAny<Todo>()))
+                .Returns(Task.FromResult(true));
+
+            // Act
+            var result = await todoController.PutTodo(todo.Id, todo);
+
+            // Assert
+            Assert.IsAssignableFrom<OkResult>(result);
+        }
 
         private Todo GetTodo() =>
             new Todo { Id = 1, Name = "Hi", IsComplete = false };
