@@ -17,7 +17,7 @@ See [here](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?
 2. Restore packages with `dotnet restore`
 3. Run project with `dotnet run` from within the TodoAPI directory
 4. View swagger documentation at `https://localhost:<port>/swagger`. For example, `https://localhost:5001/swagger`
-5. Interact with the TodosAPI at `https://localhost:<port>/api/Todos`. For example, `https://localhost:5001/api/Todos`
+5. Interact with the TodosAPI at `https://localhost:<port>/api/Todo`. For example, `https://localhost:5001/api/Todo`
 
 ## Testing
 * Run tests with `dotnet test` from within the TodoAPITests directory
