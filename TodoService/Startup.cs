@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TodoService.Repositories;
 
 namespace TodoService
 {
@@ -24,6 +25,7 @@ namespace TodoService
 
             services.AddDbContext<TodoContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
+            services.AddScoped<ITodoRepository, TodoRepositoryEF>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
