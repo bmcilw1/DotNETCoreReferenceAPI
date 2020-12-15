@@ -10,28 +10,21 @@ namespace TodoAPITests
 {
     public class TodoControllerTests
     {
-        Mock<ITodoService> _todoServiceMock;
-        TodoController _todoController;
-
-        public TodoControllerTests()
-        {
-            _todoServiceMock = new Mock<ITodoService>();
-            _todoController = new TodoController(_todoServiceMock.Object);
-        }
-
         [Fact]
         public async Task GetTodoItems_CallsGetAllAsync()
         {
             // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
 
-            _todoServiceMock.Setup(s => s.GetAllAsync())
+            todoServiceMock.Setup(s => s.GetAllAsync())
                 .Returns(Task.FromResult(new List<Todo>() { }));
 
             // Act
-            await _todoController.GetTodos();
+            await todoController.GetTodos();
 
             // Assert
-            _todoServiceMock.Verify(s => s.GetAllAsync(), Times.Once());
+            todoServiceMock.Verify(s => s.GetAllAsync(), Times.Once());
         }
     }
 }
