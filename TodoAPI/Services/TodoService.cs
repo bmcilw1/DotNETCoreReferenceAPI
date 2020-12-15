@@ -5,11 +5,11 @@ using TodoAPI.Models;
 
 namespace TodoAPI.Services
 {
-    public class TodoServiceEF : ITodoService
+    public class TodoService : ITodoService
     {
         private readonly TodoContext _context;
 
-        public TodoServiceEF(TodoContext context)
+        public TodoService(TodoContext context)
         {
             _context = context;
         }

@@ -25,7 +25,7 @@ namespace TodoAPI
 
             services.AddDbContext<TodoContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
-            services.AddScoped<ITodoService, TodoServiceEF>();
+            services.AddScoped<ITodoService, TodoService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
