@@ -191,6 +191,24 @@ namespace TodoAPITests
             Assert.IsAssignableFrom<OkResult>(result);
         }
 
+        [Fact]
+        public async Task PutTodo_WhenIdNotMatch_ReturnsBadRequest()
+        {
+            // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
+
+            var todo = GetTodo();
+            todo.Id = 1;
+
+            // Act
+            var result = await todoController.PutTodo(2, todo);
+
+            // Assert
+            Assert.IsAssignableFrom<BadRequestResult>(result);
+        }
+
+
         private Todo GetTodo() =>
             new Todo { Id = 1, Name = "Hi", IsComplete = false };
 
