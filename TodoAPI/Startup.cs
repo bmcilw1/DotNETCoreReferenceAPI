@@ -25,7 +25,7 @@ namespace TodoAPI
         {
 
             services.AddDbContext<TodoContext>(opt =>
-                                               opt.UseInMemoryDatabase("TodoList"));
+                                               opt.UseInMemoryDatabase("Todos"));
             services.AddScoped<ITodoRepository, TodoRepositoryEF>();
             services.AddScoped<ITodoService, TodoService>();
             services.AddControllers();
@@ -39,12 +39,20 @@ namespace TodoAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNETCoreReferenceAPI v1"));
-            }
+                DebugConfig(app);
 
+            CommonConfig(app);
+        }
+
+        private static void DebugConfig(IApplicationBuilder app)
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNETCoreReferenceAPI v1"));
+        }
+
+        static void CommonConfig(IApplicationBuilder app)
+        {
             app.UseHttpsRedirection();
 
             app.UseRouting();
