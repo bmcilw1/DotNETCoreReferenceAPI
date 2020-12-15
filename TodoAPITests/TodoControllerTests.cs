@@ -89,7 +89,43 @@ namespace TodoAPITests
 
             // Assert
             Assert.IsAssignableFrom<NotFoundResult>(result.Result);
-            Assert.Equal(null, result.Value);
+            Assert.Null(result.Value);
+        }
+
+        [Fact]
+        public async Task DeleteTodo_WhenNotFound_Returns404()
+        {
+            // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
+
+            todoServiceMock
+                .Setup(s => s.DeleteAsync(It.IsAny<long>()))
+                .Returns(Task.FromResult(false));
+
+            // Act
+            var result = await todoController.DeleteTodo(1);
+
+            // Assert
+            Assert.IsAssignableFrom<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteTodo_WhenFound_ReturnsOk()
+        {
+            // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
+
+            todoServiceMock
+                .Setup(s => s.DeleteAsync(It.IsAny<long>()))
+                .Returns(Task.FromResult(true));
+
+            // Act
+            var result = await todoController.DeleteTodo(1);
+
+            // Assert
+            Assert.IsAssignableFrom<OkResult>(result);
         }
 
         private Todo GetTodo() =>
