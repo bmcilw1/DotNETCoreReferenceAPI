@@ -80,13 +80,12 @@ namespace TodoAPITests
             var todoServiceMock = new Mock<ITodoService>();
             var todoController = new TodoController(todoServiceMock.Object);
 
-            var todo = GetTodo();
             todoServiceMock
                 .Setup(s => s.GetByIdAsync(It.IsAny<long>()))
                 .Returns(Task.FromResult<Todo>(null));
 
             // Act
-            var result = await todoController.GetTodo(todo.Id);
+            var result = await todoController.GetTodo(1);
 
             // Assert
             Assert.IsAssignableFrom<NotFoundResult>(result.Result);
