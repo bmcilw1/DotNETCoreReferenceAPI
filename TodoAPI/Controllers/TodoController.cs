@@ -42,9 +42,9 @@ namespace TodoAPI.Controllers
 
             try
             {
-                var success = await _todoService.UpdateAsync(todoDTO);
+                var found = await _todoService.UpdateAsync(todoDTO);
 
-                if (!success)
+                if (!found)
                     return NotFound();
             }
             catch (DbUpdateConcurrencyException)
