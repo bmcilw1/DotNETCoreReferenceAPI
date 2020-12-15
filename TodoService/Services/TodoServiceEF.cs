@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TodoService.Models;
 
-namespace TodoService.Repositories
+namespace TodoService.Services
 {
-    public class TodoRepositoryEF : ITodoRepository
+    public class TodoServiceEF : ITodoService
     {
         private readonly TodoContext _context;
 
-        public TodoRepositoryEF(TodoContext context)
+        public TodoServiceEF(TodoContext context)
         {
             _context = context;
         }

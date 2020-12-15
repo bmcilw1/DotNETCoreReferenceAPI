@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TodoService.Models;
 
-namespace TodoService.Repositories
+namespace TodoService.Services
 {
-    public interface ITodoRepository
+    public interface ITodoService
     {
         Task<TodoDTO> GetByIdAsync(long id);
         Task<List<TodoDTO>> GetAllAsync();
