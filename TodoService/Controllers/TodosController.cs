@@ -9,56 +9,56 @@ namespace TodoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class TodosController : ControllerBase
     {
         private readonly TodoContext _context;
 
-        public TodoItemsController(TodoContext context)
+        public TodosController(TodoContext context)
         {
             _context = context;
         }
 
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<TodoDTO>>> GetTodoItems()
         {
-            return await _context.TodoItems.Select(item => ItemToDTO(item)).ToListAsync();
+            return await _context.Todos.Select(item => ItemToDTO(item)).ToListAsync();
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoDTO>> GetTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todo = await _context.Todos.FindAsync(id);
 
-            if (todoItem == null)
+            if (todo == null)
             {
                 return NotFound();
             }
 
-            return ItemToDTO(todoItem);
+            return ItemToDTO(todo);
         }
 
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, TodoItemDTO todoItemDTO)
+        public async Task<IActionResult> PutTodoItem(long id, TodoDTO todoDTO)
         {
-            if (id != todoItemDTO.Id)
+            if (id != todoDTO.Id)
             {
                 return BadRequest();
             }
 
-            var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
+            var todo = await _context.Todos.FindAsync(id);
+            if (todo == null)
             {
                 return NotFound();
             }
 
-            todoItem.Name = todoItemDTO.Name;
-            todoItem.IsComplete = todoItemDTO.IsComplete;
+            todo.Name = todoDTO.Name;
+            todo.IsComplete = todoDTO.IsComplete;
 
-            _context.Entry(todoItem).State = EntityState.Modified;
+            _context.Entry(todo).State = EntityState.Modified;
 
             try
             {
@@ -82,31 +82,31 @@ namespace TodoService.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItemDTO>> PostTodoItem(TodoItemDTO todoItemDTO)
+        public async Task<ActionResult<TodoDTO>> PostTodoItem(TodoDTO todoDTO)
         {
-            var todoItem = new TodoItem()
+            var todo = new Todo()
             {
-                Name = todoItemDTO.Name,
-                IsComplete = todoItemDTO.IsComplete
+                Name = todoDTO.Name,
+                IsComplete = todoDTO.IsComplete
             };
 
-            _context.TodoItems.Add(todoItem);
+            _context.Todos.Add(todo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItemDTO.Id }, ItemToDTO(todoItem));
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoDTO.Id }, ItemToDTO(todo));
         }
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await _context.Todos.FindAsync(id);
             if (todoItem == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todoItem);
+            _context.Todos.Remove(todoItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -114,10 +114,10 @@ namespace TodoService.Controllers
 
         private bool TodoItemExists(long id)
         {
-            return _context.TodoItems.Any(e => e.Id == id);
+            return _context.Todos.Any(e => e.Id == id);
         }
 
-        private static TodoItemDTO ItemToDTO(TodoItem todoItem) => new TodoItemDTO
+        private static TodoDTO ItemToDTO(Todo todoItem) => new TodoDTO
         {
             Id = todoItem.Id,
             Name = todoItem.Name,
