@@ -2,57 +2,53 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TodoAPI.Models;
+using TodoAPI.Repositories;
 
 namespace TodoAPI.Services
 {
     public class TodoService : ITodoService
     {
-        private readonly TodoContext _context;
+        private readonly ITodoRepository _todoRepository;
 
-        public TodoService(TodoContext context)
+        public TodoService(ITodoRepository todoRepository)
         {
-            _context = context;
+            _todoRepository = todoRepository;
         }
 
         public Task<List<Todo>> GetAllAsync()
         {
-            return _context.Todos.ToListAsync();
+            return _todoRepository.GetAllAsync();
         }
 
-        public async Task<Todo> GetByIdAsync(long id)
+        public Task<Todo> GetByIdAsync(long id)
         {
-            return await _context.Todos.FindAsync(id);
+            return _todoRepository.GetByIdAsync(id);
         }
 
         public Task AddAsync(Todo todo)
         {
-            _context.Todos.Add(todo);
-            return _context.SaveChangesAsync();
+            return _todoRepository.AddAsync(todo);
         }
 
         public Task UpdateAsync(Todo todo)
         {
-            _context.Entry(todo).State = EntityState.Modified;
-            return _context.SaveChangesAsync();
+            return _todoRepository.UpdateAsync(todo);
         }
 
         public async Task<bool> DeleteAsync(long id)
         {
-            var todo = await _context.Todos.FindAsync(id);
+            var todo = await _todoRepository.GetByIdAsync(id);
             if (todo == null)
-            {
                 return false;
-            }
 
-            _context.Todos.Remove(todo);
-            await _context.SaveChangesAsync();
+            await _todoRepository.DeleteAsync(id);
 
             return true;
         }
 
         public Task<bool> ExistsAsync(long id)
         {
-            return _context.Todos.AnyAsync(e => e.Id == id);
+            return _todoRepository.ExistsAsync(id);
         }
     }
 }

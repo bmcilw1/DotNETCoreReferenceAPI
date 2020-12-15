@@ -5,11 +5,11 @@ using TodoAPI.Models;
 
 namespace TodoAPI.Repositories
 {
-    public class TodoRepository : ITodoRepository
+    public class TodoRepositoryEF : ITodoRepository
     {
         private readonly TodoContext _context;
 
-        public TodoRepository(TodoContext context)
+        public TodoRepositoryEF(TodoContext context)
         {
             _context = context;
         }
