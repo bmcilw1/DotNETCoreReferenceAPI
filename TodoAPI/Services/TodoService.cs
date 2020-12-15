@@ -35,16 +35,11 @@ namespace TodoAPI.Services
             return _todoRepository.UpdateAsync(todo);
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public Task<bool> DeleteAsync(long id)
         {
-            var todo = await _todoRepository.GetByIdAsync(id);
-            if (todo == null)
-                return false;
-
-            await _todoRepository.DeleteAsync(id);
-
-            return true;
+            return _todoRepository.DeleteAsync(id);
         }
+
 
         public Task<bool> ExistsAsync(long id)
         {
