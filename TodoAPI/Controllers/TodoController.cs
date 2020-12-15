@@ -40,28 +40,19 @@ namespace TodoAPI.Controllers
             if (id != todoDTO.Id)
                 return BadRequest();
 
-            var todo = await _todoService.GetByIdAsync(id);
-
-            if (todo == null)
-                return NotFound();
-
             try
             {
-                await _todoService.UpdateAsync(todoDTO);
+                var success = await _todoService.UpdateAsync(todoDTO);
+
+                if (success)
+                    return Ok();
+                else
+                    return NotFound();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _todoService.ExistsAsync(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
-
-            return Ok();
         }
 
         // POST: api/TodoItems

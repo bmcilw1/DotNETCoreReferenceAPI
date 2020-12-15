@@ -29,7 +29,7 @@ namespace TodoAPI.Services
             return _todoRepository.AddAsync(todo);
         }
 
-        public Task UpdateAsync(Todo todo)
+        public Task<bool> UpdateAsync(Todo todo)
         {
             return _todoRepository.UpdateAsync(todo);
         }

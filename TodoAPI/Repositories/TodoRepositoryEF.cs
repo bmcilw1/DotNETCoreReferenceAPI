@@ -30,10 +30,19 @@ namespace TodoAPI.Repositories
             return _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Todo todo)
+        public async Task<bool> UpdateAsync(Todo todo)
         {
-            _context.Entry(todo).State = EntityState.Modified;
-            return _context.SaveChangesAsync();
+            var existingTodo = await _context.Todos.FindAsync(todo.Id);
+            if (existingTodo == null)
+                return false;
+
+            existingTodo.IsComplete = todo.IsComplete;
+            existingTodo.Name = todo.Name;
+
+            _context.Entry(existingTodo).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> DeleteAsync(long id)
