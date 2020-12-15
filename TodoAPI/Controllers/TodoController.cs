@@ -44,15 +44,15 @@ namespace TodoAPI.Controllers
             {
                 var success = await _todoService.UpdateAsync(todoDTO);
 
-                if (success)
-                    return Ok();
-                else
+                if (!success)
                     return NotFound();
             }
             catch (DbUpdateConcurrencyException)
             {
                 throw;
             }
+
+            return Ok();
         }
 
         // POST: api/TodoItems
