@@ -39,8 +39,8 @@ namespace TodoAPI.Repositories
             var todoEntity = _context.Entry(existingTodo);
 
             todoEntity.CurrentValues.SetValues(todo);
+            todoEntity.State = EntityState.Modified;
 
-            _context.Entry(existingTodo).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return true;
