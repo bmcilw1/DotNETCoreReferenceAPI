@@ -22,14 +22,14 @@ namespace TodoAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Todo>>> GetTodos()
         {
-            return Ok(await _todoService.GetAllAsync());
+            return await _todoService.GetAllAsync();
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Todo>> GetTodo(long id)
         {
-            return Ok(await _todoService.GetByIdAsync(id));
+            return await _todoService.GetByIdAsync(id);
         }
 
         // PUT: api/TodoItems/5
