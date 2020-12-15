@@ -40,9 +40,7 @@ namespace TodoAPI.Repositories
         {
             var todo = await _context.Todos.FindAsync(id);
             if (todo == null)
-            {
                 return false;
-            }
 
             _context.Todos.Remove(todo);
             await _context.SaveChangesAsync();
