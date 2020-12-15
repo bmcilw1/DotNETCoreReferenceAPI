@@ -60,7 +60,7 @@ namespace TodoAPITests
 
             var todo = GetTodo();
             todoServiceMock
-                .Setup(s => s.GetByIdAsync(It.Is<long>(id => id == todo.Id)))
+                .Setup(s => s.GetByIdAsync(It.IsAny<long>()))
                 .Returns(Task.FromResult(todo));
 
             // Act
