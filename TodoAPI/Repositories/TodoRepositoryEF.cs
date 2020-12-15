@@ -36,8 +36,9 @@ namespace TodoAPI.Repositories
             if (existingTodo == null)
                 return false;
 
-            existingTodo.IsComplete = todo.IsComplete;
-            existingTodo.Name = todo.Name;
+            var todoEntity = _context.Entry(existingTodo);
+
+            todoEntity.CurrentValues.SetValues(todo);
 
             _context.Entry(existingTodo).State = EntityState.Modified;
             await _context.SaveChangesAsync();
