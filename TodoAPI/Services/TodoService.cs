@@ -19,7 +19,7 @@ namespace TodoAPI.Services
             return _todoRepository.GetAllAsync();
         }
 
-        public Task<Todo> GetByIdAsync(long id)
+        public Task<Todo> GetByIdAsync(int id)
         {
             return _todoRepository.GetByIdAsync(id);
         }
@@ -34,13 +34,13 @@ namespace TodoAPI.Services
             return _todoRepository.UpdateAsync(todo);
         }
 
-        public Task<bool> DeleteAsync(long id)
+        public Task<bool> DeleteAsync(int id)
         {
             return _todoRepository.DeleteAsync(id);
         }
 
 
-        public Task<bool> ExistsAsync(long id)
+        public Task<bool> ExistsAsync(int id)
         {
             return _todoRepository.ExistsAsync(id);
         }

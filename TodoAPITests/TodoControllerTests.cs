@@ -60,7 +60,7 @@ namespace TodoAPITests
 
             var todo = GetTodo();
             todoServiceMock
-                .Setup(s => s.GetByIdAsync(It.IsAny<long>()))
+                .Setup(s => s.GetByIdAsync(It.IsAny<int>()))
                 .Returns(Task.FromResult(todo));
 
             // Act
@@ -68,7 +68,7 @@ namespace TodoAPITests
 
             // Assert
             todoServiceMock.Verify(s =>
-                s.GetByIdAsync(It.Is<long>(id => id == todo.Id)), Times.Once());
+                s.GetByIdAsync(It.Is<int>(id => id == todo.Id)), Times.Once());
             Assert.IsAssignableFrom<Todo>(result.Value);
             Assert.Equal(todo, result.Value);
         }
@@ -81,7 +81,7 @@ namespace TodoAPITests
             var todoController = new TodoController(todoServiceMock.Object);
 
             todoServiceMock
-                .Setup(s => s.GetByIdAsync(It.IsAny<long>()))
+                .Setup(s => s.GetByIdAsync(It.IsAny<int>()))
                 .Returns(Task.FromResult<Todo>(null));
 
             // Act
@@ -100,7 +100,7 @@ namespace TodoAPITests
             var todoController = new TodoController(todoServiceMock.Object);
 
             todoServiceMock
-                .Setup(s => s.DeleteAsync(It.IsAny<long>()))
+                .Setup(s => s.DeleteAsync(It.IsAny<int>()))
                 .Returns(Task.FromResult(false));
 
             // Act
@@ -118,7 +118,7 @@ namespace TodoAPITests
             var todoController = new TodoController(todoServiceMock.Object);
 
             todoServiceMock
-                .Setup(s => s.DeleteAsync(It.IsAny<long>()))
+                .Setup(s => s.DeleteAsync(It.IsAny<int>()))
                 .Returns(Task.FromResult(true));
 
             // Act
@@ -127,6 +127,32 @@ namespace TodoAPITests
             // Assert
             Assert.IsAssignableFrom<OkResult>(result);
         }
+
+        [Fact]
+        public async Task PostTodo_CallsAddAsync()
+        {
+            // Arrange
+            var todoServiceMock = new Mock<ITodoService>();
+            var todoController = new TodoController(todoServiceMock.Object);
+
+            var todo = GetTodo();
+            todoServiceMock
+                .Setup(s => s.AddAsync(It.IsAny<Todo>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await todoController.PostTodo(todo);
+
+            // Assert
+            todoServiceMock.Verify(s =>
+                s.AddAsync(It.Is<Todo>(t =>
+                    t.IsComplete == todo.IsComplete &&
+                    t.Name == todo.Name
+                )), Times.Once());
+            Assert.IsAssignableFrom<CreatedAtActionResult>(result.Result);
+            Assert.Equal(1, (result.Result as CreatedAtActionResult).RouteValues["id"]);
+        }
+
 
         private Todo GetTodo() =>
             new Todo { Id = 1, Name = "Hi", IsComplete = false };

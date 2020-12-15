@@ -19,7 +19,7 @@ namespace TodoAPI.Repositories
             return _context.Todos.ToListAsync();
         }
 
-        public async Task<Todo> GetByIdAsync(long id)
+        public async Task<Todo> GetByIdAsync(int id)
         {
             return await _context.Todos.FindAsync(id);
         }
@@ -46,7 +46,7 @@ namespace TodoAPI.Repositories
             return true;
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var todo = await _context.Todos.FindAsync(id);
             if (todo == null)
@@ -58,7 +58,7 @@ namespace TodoAPI.Repositories
             return true;
         }
 
-        public Task<bool> ExistsAsync(long id)
+        public Task<bool> ExistsAsync(int id)
         {
             return _context.Todos.AnyAsync(e => e.Id == id);
         }
