@@ -32,7 +32,7 @@ namespace TodoAPIIntegrationTests
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
             var todos = JsonConvert.DeserializeObject<IEnumerable<Todo>>(stringResponse);
             Assert.Contains(todos, t => t.Name == "Feed the dog");
-            Assert.Equal(3, todos.Count());
+            Assert.Contains(todos, t => t.Name == "Do things");
         }
 
         [Fact]
