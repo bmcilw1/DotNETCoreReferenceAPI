@@ -6,7 +6,7 @@ namespace TodoAPIIntegrationTests
     public class TodoAPIFullIntegrationTests
     {
         [Fact]
-        public void Test1()
+        public void GetAllTodos_WhenEmpty_ReturnsEmptyList()
         {
             Assert.True(true);
         }
