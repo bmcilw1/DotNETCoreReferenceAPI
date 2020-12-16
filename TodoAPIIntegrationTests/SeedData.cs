@@ -3,7 +3,7 @@ using Web.Api.Core.Domain.Entities;
 using Web.Api.Infrastructure.Data;
 using TodoAPI.Models;
 
-namespace Web.Api.IntegrationTests
+namespace TodoAPIIntegrationTests
 {
     public static class SeedData
     {
