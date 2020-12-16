@@ -1,7 +1,6 @@
 using System;
-using Web.Api.Core.Domain.Entities;
-using Web.Api.Infrastructure.Data;
 using TodoAPI.Models;
+using TodoAPI.Repositories;
 
 namespace TodoAPIIntegrationTests
 {
