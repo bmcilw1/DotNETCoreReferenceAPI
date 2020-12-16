@@ -3,6 +3,7 @@ using Xunit;
 using TodoAPI;
 using TodoAPI.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -31,6 +32,7 @@ namespace TodoAPIIntegrationTests
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
             var todos = JsonConvert.DeserializeObject<IEnumerable<Todo>>(stringResponse);
             Assert.Contains(todos, p => p.Name == "Feed the dog");
+            Assert.Equal(3, todos.Count());
         }
     }
 }
