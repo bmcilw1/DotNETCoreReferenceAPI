@@ -22,13 +22,13 @@ namespace TodoAPIIntegrationTests
         [Fact]
         public async Task GetAllTodos_ReturnsTodosInDb()
         {
-            // The endpoint or route of the controller action.
+            // Arrange, See CustomWebApplicationFactory
+
+            // Act
             var httpResponse = await _client.GetAsync("/api/Todo");
 
-            // Must be successful.
+            // Assert
             httpResponse.EnsureSuccessStatusCode();
-
-            // Deserialize and examine results.
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
             var todos = JsonConvert.DeserializeObject<IEnumerable<Todo>>(stringResponse);
             Assert.Contains(todos, p => p.Name == "Feed the dog");
