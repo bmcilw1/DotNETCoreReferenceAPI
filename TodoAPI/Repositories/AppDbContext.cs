@@ -3,9 +3,9 @@ using TodoAPI.Models;
 
 namespace TodoAPI.Repositories
 {
-    public class TodoContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public TodoContext(DbContextOptions<TodoContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }

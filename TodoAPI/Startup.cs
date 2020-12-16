@@ -23,8 +23,8 @@ namespace TodoAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<TodoContext>(opt =>
-                                               opt.UseInMemoryDatabase("InMemoryTodos"));
+            services.AddDbContext<AppDbContext>(opt =>
+                                               opt.UseInMemoryDatabase("InMemoryAppDb"));
             services.AddScoped<ITodoRepository, TodoRepositoryEF>();
             services.AddScoped<ITodoService, TodoService>();
             services.AddControllers();
