@@ -3,7 +3,6 @@ using Xunit;
 using TodoAPI;
 using TodoAPI.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -48,6 +47,23 @@ namespace TodoAPIIntegrationTests
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
             var todo = JsonConvert.DeserializeObject<Todo>(stringResponse);
             Assert.Equal(1, todo.Id);
+        }
+
+        [Fact]
+        public async Task PostTodo_CreatesNewTodo()
+        {
+            // Arrange
+            var todo = new Todo() { Name = "todo to be newly created", IsComplete = false };
+
+            // Act
+            var httpResponse = await _client.PostAsJsonAsync("/api/Todo", todo);
+
+            // Assert
+            httpResponse.EnsureSuccessStatusCode();
+            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+            var todoResponse = JsonConvert.DeserializeObject<Todo>(stringResponse);
+            Assert.IsType<int>(todoResponse.Id);
+            Assert.True(todoResponse.Id > 0);
         }
     }
 }
