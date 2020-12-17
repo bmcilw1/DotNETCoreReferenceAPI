@@ -64,6 +64,7 @@ namespace TodoAPIIntegrationTests
             var todoResponse = JsonConvert.DeserializeObject<Todo>(stringResponse);
             Assert.IsType<int>(todoResponse.Id);
             Assert.True(todoResponse.Id > 0);
+
             var httpResponseValidate = await _client.GetAsync($"/api/Todo/{todoResponse.Id}");
             httpResponseValidate.EnsureSuccessStatusCode();
             var stringResponseValidate = await httpResponseValidate.Content.ReadAsStringAsync();
@@ -82,6 +83,7 @@ namespace TodoAPIIntegrationTests
 
             // Assert
             httpResponse.EnsureSuccessStatusCode();
+
             var httpResponseValidate = await _client.GetAsync($"/api/Todo/{todo.Id}");
             httpResponseValidate.EnsureSuccessStatusCode();
             var stringResponseValidate = await httpResponseValidate.Content.ReadAsStringAsync();
@@ -102,6 +104,7 @@ namespace TodoAPIIntegrationTests
 
             // Assert
             httpResponse.EnsureSuccessStatusCode();
+
             httpResponseValidate = await _client.GetAsync($"/api/Todo/{id}");
             Assert.Equal(HttpStatusCode.NotFound, httpResponseValidate.StatusCode);
         }
