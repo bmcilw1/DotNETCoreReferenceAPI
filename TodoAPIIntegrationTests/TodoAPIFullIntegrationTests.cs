@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using TodoAPI;
 using TodoAPI.Models;
@@ -6,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace TodoAPIIntegrationTests
 {
@@ -30,8 +30,8 @@ namespace TodoAPIIntegrationTests
             httpResponse.EnsureSuccessStatusCode();
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
             var todos = JsonConvert.DeserializeObject<IEnumerable<Todo>>(stringResponse);
-            Assert.Contains(todos, t => t.Name == "Feed the dog");
-            Assert.Contains(todos, t => t.Name == "Do things");
+            Assert.Contains(todos, t => t.Name == "First Todo to be read");
+            Assert.Contains(todos, t => t.Name == "Second Todo to be read");
         }
 
         [Fact]
@@ -64,6 +64,46 @@ namespace TodoAPIIntegrationTests
             var todoResponse = JsonConvert.DeserializeObject<Todo>(stringResponse);
             Assert.IsType<int>(todoResponse.Id);
             Assert.True(todoResponse.Id > 0);
+            var httpResponseValidate = await _client.GetAsync($"/api/Todo/{todoResponse.Id}");
+            httpResponseValidate.EnsureSuccessStatusCode();
+            var stringResponseValidate = await httpResponseValidate.Content.ReadAsStringAsync();
+            var todoResponseValidate = JsonConvert.DeserializeObject<Todo>(stringResponseValidate);
+            Assert.Equal(todo.Name, todoResponseValidate.Name);
+        }
+
+        [Fact]
+        public async Task PutTodo_UpdatesTodo()
+        {
+            // Arrange
+            var todo = new Todo { Id = 3, Name = "todo to be updated - update", IsComplete = true };
+
+            // Act
+            var httpResponse = await _client.PutAsJsonAsync($"/api/Todo/{todo.Id}", todo);
+
+            // Assert
+            httpResponse.EnsureSuccessStatusCode();
+            var httpResponseValidate = await _client.GetAsync($"/api/Todo/{todo.Id}");
+            httpResponseValidate.EnsureSuccessStatusCode();
+            var stringResponseValidate = await httpResponseValidate.Content.ReadAsStringAsync();
+            var todoResponseValidate = JsonConvert.DeserializeObject<Todo>(stringResponseValidate);
+            Assert.Equal(todo.Name, todoResponseValidate.Name);
+        }
+
+        [Fact]
+        public async Task DeleteTodo_DeletesTodo()
+        {
+            // Arrange
+            var id = 4;
+            var httpResponseValidate = await _client.GetAsync($"/api/Todo/{id}");
+            Assert.Equal(HttpStatusCode.OK, httpResponseValidate.StatusCode);
+
+            // Act
+            var httpResponse = await _client.DeleteAsync($"/api/Todo/{id}");
+
+            // Assert
+            httpResponse.EnsureSuccessStatusCode();
+            httpResponseValidate = await _client.GetAsync($"/api/Todo/{id}");
+            Assert.Equal(HttpStatusCode.NotFound, httpResponseValidate.StatusCode);
         }
     }
 }
