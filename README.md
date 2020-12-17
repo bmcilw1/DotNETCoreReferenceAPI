@@ -20,7 +20,13 @@ See [here](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?
 5. Interact with the TodosAPI at `https://localhost:<port>/api/Todo`. For example, `https://localhost:5001/api/Todo`
 
 ## Testing
-* Run tests with `dotnet test` from within the TodoAPITests directory
+* Run unit tests with `dotnet test` from within the TodoAPITests directory
+* Run integration tests with `dotnet test` from within the TodoAPIIntegrationTests directory
+
+## Final Thoughts
+* Unit testing can be trivially added to the service layer as that layer acquires business logic.
+* As written the integration tests share a common instance of a seeded in-memory database. This can easily lead to test leakage. If this becomes unmanageable, CRUD tests can be rewritten to load their own needed data in the in-memory database, or the db can be re-initialized between tests. Either change will increase the time to run tests, but reduce tests breaking due to test leakage from other tests.
+* The API operations are currently written as async operations. However, with CRUD operations they are immediately awaited. This adds an overhead that increases overall latency. Consider if your use case warrants switching to synchronous operations.
 
 ## License
 * MIT License
